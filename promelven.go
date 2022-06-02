@@ -15,7 +15,7 @@ func NewPrometheusHook() (*PrometheusHook, error) {
 	counterVec := prometheus.NewCounterVec(prometheus.CounterOpts{
 		Name: "log_messages_total",
 		Help: "Total number of log messages.",
-	}, []string{"level"})
+	}, []string{"level", "message"})
 
 	for _, level := range supportedLevels {
 		counterVec.WithLabelValues(level.String(), "")
