@@ -30,6 +30,6 @@ func main() {
 
 	go http.ListenAndServe(":8080", promhttp.Handler())
 
-  log.Infof("foo")
+  logrus.Infof("foo")
 }
 ```

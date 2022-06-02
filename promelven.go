@@ -41,7 +41,7 @@ func MustNewPrometheusHook() *PrometheusHook {
 }
 
 func (hook *PrometheusHook) Fire(entry *logrus.Entry) error {
-	hook.counterVec.WithLabelValues(entry.Level.String(), "").Inc()
+	hook.counterVec.WithLabelValues(entry.Level.String(), entry.Message).Inc()
 	return nil
 }
 
