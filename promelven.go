@@ -9,7 +9,7 @@ type PrometheusHook struct {
 	counterVec *prometheus.CounterVec
 }
 
-var supportedLevels = []logrus.Level{logrus.DebugLevel, logrus.InfoLevel, logrus.WarnLevel, logrus.ErrorLevel}
+var supportedLevels = []logrus.Level{logrus.WarnLevel, logrus.ErrorLevel}
 
 func NewPrometheusHook() (*PrometheusHook, error) {
 	counterVec := prometheus.NewCounterVec(prometheus.CounterOpts{

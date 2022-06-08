@@ -1,9 +1,8 @@
 # Elven Alertmanager golang library
+Use Warning logs to send metrics to Prometheus.
 Logrus hook to expose the number of log messages as Prometheus metrics:
 
 ```
-log_messages{level="debug", "message": ""}
-log_messages{level="info", "message": ""}
 log_messages{level="warning", "message": ""}
 log_messages{level="error", "message": ""}
 ```
@@ -20,7 +19,7 @@ import (
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
-	"github.com/elvenworks/elven-alertmanager-golang"
+	promelven "github.com/elvenworks/elven-alertmanager-golang"
 )
 
 func main() {
@@ -30,6 +29,6 @@ func main() {
 
 	go http.ListenAndServe(":8080", promhttp.Handler())
 
-  logrus.Infof("foo")
+  logrus.Warning("Error Message")
 }
 ```
