@@ -7,6 +7,8 @@ log_messages{level="warning", "message": ""}
 log_messages{level="error", "message": ""}
 ```
 
+To use the lib, you need to invoke logrus and send a parameter in the final of the string "[status_code]:" inside the string and the status code you want.
+
 ## Usage
 
 Sample code:
@@ -29,6 +31,6 @@ func main() {
 
 	go http.ListenAndServe(":8080", promhttp.Handler())
 
-  logrus.Warning("Error Message")
+  logrus.Warning("Error Message [status_code]: 55")
 }
 ```

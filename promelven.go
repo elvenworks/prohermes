@@ -1,6 +1,8 @@
 package promelven
 
 import (
+	"strings"
+
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/sirupsen/logrus"
 )
@@ -15,10 +17,10 @@ func NewPrometheusHook() (*PrometheusHook, error) {
 	counterVec := prometheus.NewCounterVec(prometheus.CounterOpts{
 		Name: "log_messages_total",
 		Help: "Total number of log messages.",
-	}, []string{"level", "message"})
+	}, []string{"level", "message", "status_code"})
 
 	for _, level := range supportedLevels {
-		counterVec.WithLabelValues(level.String(), "")
+		counterVec.WithLabelValues(level.String(), "", "")
 	}
 
 	prometheus.Unregister(counterVec)
@@ -41,7 +43,18 @@ func MustNewPrometheusHook() *PrometheusHook {
 }
 
 func (hook *PrometheusHook) Fire(entry *logrus.Entry) error {
-	hook.counterVec.WithLabelValues(entry.Level.String(), entry.Message).Inc()
+
+	sc := strings.Split(entry.Message, "[status_code]: ")
+	if len(sc) != 1 {
+		if len(sc[1]) != 0 {
+			entry.Message = strings.ReplaceAll(entry.Message, "[status_code]:", "")
+			hook.counterVec.WithLabelValues(entry.Level.String(), sc[0], sc[1]).Inc()
+		} else {
+			entry.Message = strings.ReplaceAll(entry.Message, "[status_code]:", "")
+			println(entry.Message)
+		}
+	}
+
 	return nil
 }
 
