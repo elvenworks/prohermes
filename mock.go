@@ -1,4 +1,4 @@
-package promelven
+package prohermes
 
 import "github.com/stretchr/testify/mock"
 

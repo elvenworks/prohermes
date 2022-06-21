@@ -21,7 +21,7 @@ import (
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
-	promelven "github.com/elvenworks/elven-alertmanager-golang"
+	promelven "github.com/elvenworks/prohermes"
 )
 
 func main() {

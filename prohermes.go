@@ -1,4 +1,4 @@
-package promelven
+package prohermes
 
 import (
 	"strings"
