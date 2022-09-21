@@ -1,6 +1,7 @@
 package prohermes
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/prometheus/client_golang/prometheus"
@@ -43,16 +44,16 @@ func MustNewPrometheusHook() *PrometheusHook {
 }
 
 func (hook *PrometheusHook) Fire(entry *logrus.Entry) error {
+	message := strings.Split(entry.Message, "[status_code]: ")
 
-	sc := strings.Split(entry.Message, "[status_code]: ")
-	if len(sc) != 1 {
-		if len(sc[1]) != 0 {
-			entry.Message = strings.ReplaceAll(entry.Message, "[status_code]:", "")
-			hook.counterVec.WithLabelValues(entry.Level.String(), sc[0], sc[1]).Inc()
-		} else {
-			entry.Message = strings.ReplaceAll(entry.Message, "[status_code]:", "")
-			println(entry.Message)
+	if len(message) != 1 {
+		entry.Message = strings.ReplaceAll(entry.Message, fmt.Sprintf("[status_code]: %v", message[1]), "")
+
+		if len(message[1]) != 0 {
+			hook.counterVec.WithLabelValues(entry.Level.String(), message[0], message[1]).Inc()
 		}
+
+		println(entry.Message)
 	}
 
 	return nil
