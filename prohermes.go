@@ -52,8 +52,6 @@ func (hook *PrometheusHook) Fire(entry *logrus.Entry) error {
 		if len(message[1]) != 0 {
 			hook.counterVec.WithLabelValues(entry.Level.String(), message[0], message[1]).Inc()
 		}
-
-		println(entry.Message)
 	}
 
 	return nil
